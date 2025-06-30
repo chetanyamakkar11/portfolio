@@ -241,20 +241,12 @@ export default function App() {
   };
 
   useEffect(() => {
-    if (!aboutVisible) {
-      setTypedLines([]);
-      setCurrentLine('');
-      setCharIndex(0);
-      setLineIndex(0);
-      setAboutLoop(0);
-      return;
-    }
     if (lineIndex < fullLines.length) {
       if (charIndex < fullLines[lineIndex].length) {
         const timeout = setTimeout(() => {
           setCurrentLine(prev => prev + fullLines[lineIndex][charIndex]);
           setCharIndex(i => i + 1);
-        }, 40);
+        }, 25);
         return () => clearTimeout(timeout);
       } else {
         const timeout = setTimeout(() => {
@@ -270,7 +262,7 @@ export default function App() {
       // It will restart only if the section scrolls out of view and then back in.
       return;
     }
-  }, [charIndex, lineIndex, aboutLoop, aboutVisible]);
+  }, [charIndex, lineIndex]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -320,20 +312,12 @@ export default function App() {
 
   // Simple typewriter effect for Skills section (like About)
   useEffect(() => {
-    if (!skillsVisible) {
-      setSkillsTypedLines([]);
-      setSkillsCurrentLine('');
-      setSkillsCharIndex(0);
-      setSkillsLineIndex(0);
-      setSkillsLoop(0);
-      return;
-    }
     if (skillsLineIndex < skillsFullLines.length) {
       if (skillsCharIndex < skillsFullLines[skillsLineIndex].length) {
         const timeout = setTimeout(() => {
           setSkillsCurrentLine(prev => prev + skillsFullLines[skillsLineIndex][skillsCharIndex]);
           setSkillsCharIndex(i => i + 1);
-        }, 40);
+        }, 25);
         return () => clearTimeout(timeout);
       } else {
         const timeout = setTimeout(() => {
@@ -349,7 +333,7 @@ export default function App() {
       // It will restart only if the section scrolls out of view and then back in.
       return;
     }
-  }, [skillsCharIndex, skillsLineIndex, skillsLoop, skillsVisible]);
+  }, [skillsCharIndex, skillsLineIndex]);
 
   const bgClass = darkMode ? 'bg-[#1e1e1e] text-[#d4d4d4]' : 'bg-[#ffffff] text-[#000000]';
   const sidebarClass = darkMode ? 'bg-[#252526]' : 'bg-[#f3f3f3]';
@@ -517,7 +501,7 @@ export default function App() {
 
           <section id="Skills" ref={el => (refs.current['Skills'] = el)} className="py-16 flex items-center justify-center">
             <div className="w-full flex flex-col items-center">
-              <h1 className={`text-2xl mb-8 ${headingColor} text-center animate-fade-in-up ${skillsVisible ? 'visible' : ''}`}>Skills</h1>
+              <h1 className={`text-2xl mb-8 ${headingColor} text-center`}>Skills</h1>
               <div className="space-y-2 max-w-4xl mx-auto text-center">
                 {skillsTypedLines.map((line, idx) => (
                   line.trim() === '' ? null : (
