@@ -1,12 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@keyframes blink {
-  0%, 100% { border-color: transparent; }
-  50% { border-color: #d4d4d4; }
+html {
+  scroll-behavior: smooth;
 }
 
-.animate-blink {
-  animation: blink 1s step-end infinite;
+body {
+  @apply bg-white text-zinc-900;
+}
+
+/* Lightweight scroll-reveal: starts hidden, fades in once visible. */
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
