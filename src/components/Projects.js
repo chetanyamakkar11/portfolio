@@ -14,18 +14,26 @@ export default function Projects() {
 
         <div className="mt-8 grid sm:grid-cols-2 gap-4">
           <Reveal delay={0}>
-            <div className="h-full rounded-2xl border border-dashed border-orange-200 bg-orange-50/50 p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all">
+            <a
+              href={projectBoxes.caseStudies.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="h-full flex flex-col rounded-2xl border border-orange-200 bg-orange-50/50 p-6 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all"
+            >
               <div className="w-9 h-9 rounded-lg bg-orange-100 flex items-center justify-center text-orange-500 mb-3">
                 <Sparkles size={17} />
               </div>
               <span className="text-xs font-mono uppercase tracking-widest text-orange-600">
-                Coming soon
+                New
               </span>
-              <h3 className="mt-1.5 font-semibold text-zinc-900">{projectBoxes.comingSoon.title}</h3>
+              <h3 className="mt-1.5 font-semibold text-zinc-900 flex items-center gap-1.5">
+                {projectBoxes.caseStudies.title}
+                <ArrowUpRight size={15} className="text-zinc-400" />
+              </h3>
               <p className="mt-2 text-sm text-zinc-500 leading-relaxed">
-                {projectBoxes.comingSoon.description}
+                {projectBoxes.caseStudies.description}
               </p>
-            </div>
+            </a>
           </Reveal>
 
           <Reveal delay={60}>

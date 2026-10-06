@@ -21,10 +21,11 @@ export const now = {
 
 export const projectBoxes = {
   heading: "What I've been working on",
-  comingSoon: {
-    title: 'Ones to Watch',
+  caseStudies: {
+    title: 'Case Study Notebook',
     description:
-      'Deep dives into new companies I think are about to get a lot more interesting — how they work, why they might win, and what could sink them.',
+      'Independent investment write-ups on companies I find interesting — sourced, underwritten, and modeled the way I’d bring them to an investment committee.',
+    url: 'https://pe-portfolio-ten.vercel.app/',
   },
   github: {
     title: 'See it on GitHub',
