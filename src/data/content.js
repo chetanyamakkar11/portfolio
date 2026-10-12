@@ -4,7 +4,7 @@
 export const nav = [
   { id: 'projects', label: 'Projects' },
   { id: 'believe', label: 'Beliefs' },
-  { id: 'interests', label: 'Into' },
+  { id: 'interests', label: 'Interests' },
   { id: 'contact', label: 'Contact' },
 ];
 

@@ -35,13 +35,14 @@ export default function App() {
   const handleNavClick = (id) => {
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
       setActiveSection(id);
     }
   };
 
   return (
-    <div className="min-h-screen bg-white text-zinc-900 font-sans">
+    <div className="min-h-screen bg-canvas text-ink">
       <Header activeSection={activeSection} onNavClick={handleNavClick} />
       <main>
         <Hero />

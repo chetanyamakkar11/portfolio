@@ -6,30 +6,27 @@ import { interests } from '../data/content';
 
 export default function Interests() {
   return (
-    <section id="interests" className="py-16 px-6 border-t border-zinc-100">
-      <div className="max-w-prose mx-auto">
-        <div className="flex flex-col-reverse sm:flex-row sm:items-end sm:justify-between gap-5">
-          <Reveal>
-            <SectionHeading eyebrow="Into" heading={interests.heading} />
-          </Reveal>
-          <Reveal delay={40}>
-            <img
-              src="/candid.jpg"
-              alt="Chetanya"
-              className="w-28 sm:w-32 aspect-[3/4] object-cover rounded-xl shadow-md rotate-2 ring-4 ring-white shrink-0"
-            />
-          </Reveal>
-        </div>
+    <section id="interests" className="py-24 sm:py-32 px-6">
+      <div className="max-w-page mx-auto">
+        <Reveal>
+          <SectionHeading eyebrow="Interests" heading={interests.heading} />
+        </Reveal>
 
-        <div className="mt-6 grid sm:grid-cols-2 gap-x-6 gap-y-4">
+        <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          <Reveal className="sm:row-span-2">
+            <div className="h-full min-h-[20rem] rounded-tile overflow-hidden bg-tile">
+              <img src="/candid.jpg" alt="Chetanya" className="w-full h-full object-cover" />
+            </div>
+          </Reveal>
+
           {interests.cards.map((card, idx) => (
-            <Reveal key={card.title} delay={idx * 40}>
-              <div className="flex gap-2.5">
-                <Icon name={card.icon} size={15} className="mt-0.5 shrink-0 text-orange-400" />
-                <p className="text-sm text-zinc-600 leading-relaxed">
-                  <span className="font-medium text-zinc-800">{card.title} — </span>
-                  {card.description}
-                </p>
+            <Reveal key={card.title} delay={60 + idx * 60}>
+              <div className="h-full rounded-tile bg-tile p-7">
+                <div className="w-10 h-10 rounded-xl bg-raised flex items-center justify-center text-accent shadow-sm">
+                  <Icon name={card.icon} size={18} />
+                </div>
+                <h3 className="mt-5 text-lg font-semibold tracking-[-0.018em] text-ink">{card.title}</h3>
+                <p className="mt-1.5 text-[0.9375rem] text-ink-2 leading-relaxed">{card.description}</p>
               </div>
             </Reveal>
           ))}

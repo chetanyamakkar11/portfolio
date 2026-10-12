@@ -1,25 +1,213 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Light palette (RGB triplets so Tailwind can apply alpha). */
+:root {
+  --canvas: 255 255 255;
+  --tile: 245 245 247;
+  --raised: 255 255 255;
+  --ink: 29 29 31;
+  --ink-2: 110 110 115;
+  --ink-3: 134 134 139;
+  --hairline: 210 210 215;
+  --accent: 234 88 12;
+  --accent-strong: 194 65 12;
+  --nav: 255 255 255;
+
+  /* Critically damped: quick out of the gate, settles with no overshoot. */
+  --ease-spring: cubic-bezier(0.22, 1, 0.36, 1);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --canvas: 0 0 0;
+    --tile: 22 22 23;
+    --raised: 29 29 31;
+    --ink: 245 245 247;
+    --ink-2: 161 161 166;
+    --ink-3: 134 134 139;
+    --hairline: 66 66 69;
+    --accent: 251 146 60;
+    --accent-strong: 253 186 116;
+    --nav: 22 22 23;
+    color-scheme: dark;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 html {
-  scroll-behavior: smooth;
+  /* Ease the dark/light switch instead of a brightness jump. */
+  transition: background-color 0.3s ease;
 }
 
 body {
-  @apply bg-white text-zinc-900;
+  @apply bg-canvas text-ink font-sans;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  font-optical-sizing: auto;
 }
 
-/* Lightweight scroll-reveal: starts hidden, fades in once visible. */
+/* Type scale: tracking tightens and leading closes as size grows. */
+.display {
+  font-size: clamp(2.5rem, 6.5vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 700;
+}
+
+.headline {
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: -0.028em;
+  font-weight: 700;
+}
+
+.title {
+  font-size: 1.5rem;
+  line-height: 1.17;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+.eyebrow {
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  font-weight: 600;
+}
+
+/* Scroll reveal. */
 .reveal {
   opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  transform: translateY(16px);
+  transition: opacity 0.7s var(--ease-spring), transform 0.7s var(--ease-spring);
 }
 
 .reveal-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
+}
+
+/* Tappable surfaces: feedback lands on press, not on release. */
+.press {
+  transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-spring),
+    background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.press:active {
+  transform: scale(0.97);
+  transition-duration: 0.1s;
+}
+
+.tile-link:hover {
+  transform: scale(1.012);
+  box-shadow: 0 18px 40px -24px rgb(0 0 0 / 0.25);
+}
+
+.tile-link:active {
+  transform: scale(0.985);
+}
+
+/* The chevron hints in the direction the link goes. */
+.chevron-link svg {
+  transition: transform 0.35s var(--ease-spring);
+}
+
+.chevron-link:hover svg,
+.tile-link:hover .chevron-link svg {
+  transform: translateX(3px);
+}
+
+/* Translucent nav material. Edge appears only once content is under it. */
+.nav-material {
+  background: rgb(var(--nav) / 0.72);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 1px 0 0 transparent;
+  transition: box-shadow 0.3s ease;
+}
+
+.nav-material.is-scrolled {
+  box-shadow: 0 1px 0 0 rgb(var(--hairline) / 0.6);
+}
+
+/* Mobile menu grows from the toggle and retracts along the same path.
+   A transition (not mount/unmount), so a mid-flight tap reverses it from where it is. */
+.menu {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+  transition: grid-template-rows 0.45s var(--ease-spring), opacity 0.25s ease,
+    visibility 0s linear 0.45s;
+}
+
+.menu.menu-open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.menu > * {
+  overflow: hidden;
+}
+
+.menu .menu-item {
+  transform: translateY(-6px);
+  transition: transform 0.45s var(--ease-spring);
+}
+
+.menu.menu-open .menu-item {
+  transform: none;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transform: none;
+    transition: opacity 0.3s ease;
+  }
+  .press:active,
+  .tile-link:hover,
+  .tile-link:active,
+  .chevron-link:hover svg,
+  .tile-link:hover .chevron-link svg,
+  .menu .menu-item {
+    transform: none;
+  }
+  .menu {
+    transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+  }
+  .menu.menu-open {
+    transition-delay: 0s;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .nav-material {
+    background: rgb(var(--nav));
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .nav-material {
+    background: rgb(var(--nav));
+    box-shadow: 0 1px 0 0 rgb(var(--ink-3));
+  }
 }

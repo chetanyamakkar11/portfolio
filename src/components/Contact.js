@@ -6,35 +6,34 @@ import { contact } from '../data/content';
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-16 px-6 border-t border-zinc-100">
-      <div className="max-w-prose mx-auto">
+    <section id="contact" className="py-24 sm:py-36 px-6 bg-tile">
+      <div className="max-w-copy mx-auto text-center">
         <Reveal>
-          <SectionHeading eyebrow="Contact" heading={contact.heading} />
+          <SectionHeading eyebrow="Contact" heading={contact.heading} center />
         </Reveal>
 
         <Reveal delay={60}>
-          <p className="mt-4 text-zinc-600 leading-relaxed max-w-md">
-            {contact.description}
-          </p>
+          <p className="mt-5 text-lg text-ink-2 leading-relaxed">{contact.description}</p>
         </Reveal>
 
-        <Reveal delay={100}>
-          <div className="mt-5 flex flex-wrap gap-2">
+        <Reveal delay={120}>
+          <div className="mt-9 flex flex-wrap justify-center gap-3">
             <a
               href={`mailto:${contact.links.email}`}
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-orange-600 text-white text-sm hover:bg-orange-700 transition-colors"
+              className="press focus-ring inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent text-white text-[0.9375rem] font-medium hover:bg-accent-strong dark:text-black"
             >
-              <Mail size={14} /> Email
+              <Mail size={16} /> Email me
             </a>
             <a
               href={contact.links.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-zinc-200 text-zinc-700 text-sm hover:border-orange-300 hover:text-orange-600 transition-colors"
+              className="press focus-ring inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-raised text-ink text-[0.9375rem] font-medium shadow-sm"
             >
-              <Linkedin size={14} /> LinkedIn
+              <Linkedin size={16} /> LinkedIn
             </a>
           </div>
+          <p className="mt-6 text-sm text-ink-3 select-all">{contact.links.email}</p>
         </Reveal>
       </div>
     </section>
